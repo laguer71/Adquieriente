@@ -8,7 +8,7 @@ namespace WebApiClient.Test
    {
       private const string Url = "/ecommerce/v1/transacciones/venta-normal";
 
-      public VentaNormalTest() : base(Url)
+      public VentaNormalTest() : base(Url, "VentaNormal.txt")
       { }
 
 
@@ -23,7 +23,7 @@ namespace WebApiClient.Test
       }
 
       [Fact]
-      public void VerificarVentaNormal()
+      public void Verificar_Venta_Normal()
       {
          var ventaNormal = new VentaNormal()
          {
@@ -40,11 +40,11 @@ namespace WebApiClient.Test
          };
          var body = JsonConvert.SerializeObject(ventaNormal);
 
-         RunTestCase(body);
+         RunTestCase(body, nameof(Verificar_Venta_Normal));
       }
 
       [Fact]
-      public void RechazoPorNumeroDeControl()
+      public void Rechazo_Por_Numero_De_Control()
       {
          var ventaNormal = new VentaNormal()
          {
@@ -61,11 +61,11 @@ namespace WebApiClient.Test
          };
          var body = JsonConvert.SerializeObject(ventaNormal);
 
-         RunTestCase(body);
+         RunTestCase(body, nameof(Rechazo_Por_Numero_De_Control));
       }
 
       [Fact]
-      public void RechazoTarjetaExpirada()
+      public void Rechazo_Tarjeta_Expirada()
       {
 
          var ventaNormal = new VentaNormal()
@@ -84,11 +84,11 @@ namespace WebApiClient.Test
 
          var body = JsonConvert.SerializeObject(ventaNormal);
 
-         RunTestCase(body);
+         RunTestCase(body, nameof(Rechazo_Tarjeta_Expirada));
       }
 
       [Fact]
-      public void MontoNoNumerico()
+      public void Monto_No_Numerico()
       {
          var ventaNormal = new VentaNormal()
          {
@@ -105,11 +105,11 @@ namespace WebApiClient.Test
 
          var body = JsonConvert.SerializeObject(ventaNormal);
 
-         RunTestCase(body);
+         RunTestCase(body, nameof(Monto_No_Numerico));
       }
 
       [Fact]
-      public void IdTerminalMasLarga()
+      public void Id_Terminal_Mas_Larga()
       {
          var ventaNormal = new VentaNormal()
          {
@@ -127,11 +127,11 @@ namespace WebApiClient.Test
 
          var body = JsonConvert.SerializeObject(ventaNormal);
 
-         RunTestCase(body);
+         RunTestCase(body, nameof(Id_Terminal_Mas_Larga));
       }
 
       [Fact]
-      public void FechaExpiracionLarga()
+      public void Fecha_Expiracion_Larga()
       {
          var ventaNormal = new VentaNormal()
          {
@@ -149,7 +149,7 @@ namespace WebApiClient.Test
 
          var body = JsonConvert.SerializeObject(ventaNormal);
 
-         RunTestCase(body);
+         RunTestCase(body, nameof(Fecha_Expiracion_Larga));
       }
    }
 }

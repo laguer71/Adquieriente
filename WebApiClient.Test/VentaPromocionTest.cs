@@ -1,39 +1,182 @@
 ﻿using Banorte.Aquiriente.ClienteApi;
 using Newtonsoft.Json;
-using System;
-using System.Linq;
-using System.Net;
 using Xunit;
 
 namespace WebApiClient.Test
 {
-   public class VentaPromocionTest
+   public class VentaPromocionTest : ApiTestBase
    {
+      private const string Url = "/ecommerce/v1/transacciones/venta-promocion";
+
+      public VentaPromocionTest() : base(Url, "VentaPromocion.txt")
+      { }
 
       [Fact]
-      public void VerificarVentaPromocion()
+      public void Verificar_Venta_Seis_Meses_Sin_Intereses()
       {
-         Token token;
-         token = Program.GetAuthToken();
-         var endpoint = new Uri("https://api-dev.banorte.com/dev/ecommerce/v1/transacciones/venta-promocion");
-         var body = JsonConvert.SerializeObject(VentaPromocion.CrearBody());
-         var result = Program.LlamadaApi(endpoint, token, body);
+         var ventaPromocion = new VentaPromocion()
+         {
+            datos = new VentaPromocion.Datos()
+            {
+               modoVenta = "PRD",
+               idTerminal = "000000001",
+               importeTotal = 1.0m,
+               modoEntrada = "MANUAL",
+               numeroPlastico = "4000000000000002",
+               periodoExpiracion = 1019,
+               codigoSeguridad = 248,
+               diferimientoInicial = 2,
+               numeroPagos = 6,
+               tipoPlanPagos = 03,
+               numeroControl = "CONN_VP_Test_001"
+            }
+         };
+         var body = JsonConvert.SerializeObject(ventaPromocion);
+         RunTestCase(body, nameof(Verificar_Venta_Seis_Meses_Sin_Intereses));
+      }
 
-         Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+      [Fact]
+      public void Rechazo_Por_Numero_De_Control_Existente()
+      {
+         var ventaPromcion = new VentaPromocion()
+         {
+            datos = new VentaPromocion.Datos()
+            {
+               modoVenta = "PRD",
+               idTerminal = "000000001",
+               importeTotal = 1.0m,
+               modoEntrada = "MANUAL",
+               numeroPlastico = "4000000000000002",
+               periodoExpiracion = 1019,
+               codigoSeguridad = 248,
+               diferimientoInicial = 2,
+               numeroPagos = 6,
+               tipoPlanPagos = 03,
+               numeroControl = "CONN_VP_Test_002"
+            }
+         };
+         var body = JsonConvert.SerializeObject(ventaPromcion);
+         RunTestCase(body, nameof(Rechazo_Por_Numero_De_Control_Existente));
+      }
 
-         Assert.NotNull(result.Headers.FirstOrDefault(x => x.Name == "Access-Control-Allow-Headers").Value);
-         Assert.NotNull(result.Headers.FirstOrDefault(x => x.Name == "Access-Control-Allow-Methods").Value);
-         Assert.NotNull(result.Headers.FirstOrDefault(x => x.Name == "Access-Control-Allow-Origin").Value);
-         Assert.NotNull(result.Headers.FirstOrDefault(x => x.Name == "Access-Control-Max-Age").Value);
-         Assert.NotNull(result.Headers.FirstOrDefault(x => x.Name == "Connection").Value);
-         Assert.NotNull(result.Headers.FirstOrDefault(x => x.Name == "Content-Type").Value);
-         Assert.NotNull(result.Headers.FirstOrDefault(x => x.Name == "Date").Value);
-         Assert.NotNull(result.Headers.FirstOrDefault(x => x.Name == "Server").Value);
-         Assert.NotNull(result.Headers.FirstOrDefault(x => x.Name == "Transfer-Encoding").Value);
-         Assert.NotNull(result.Headers.FirstOrDefault(x => x.Name == "Vary").Value);
-         Assert.NotNull(result.Headers.FirstOrDefault(x => x.Name == "X-Backside-Transport").Value);
-         Assert.NotNull(result.Headers.FirstOrDefault(x => x.Name == "X-Global-Transaction-ID").Value);
+      [Fact]
+      public void Verificar_Venta_Dieciocho_Meses_Sin_Intereses()
+      {
+         var ventaPromcion = new VentaPromocion()
+         {
+            datos = new VentaPromocion.Datos()
+            {
+               modoVenta = "PRD",
+               idTerminal = "000000001",
+               importeTotal = 1.0m,
+               modoEntrada = "MANUAL",
+               numeroPlastico = "4000000000000002",
+               periodoExpiracion = 1019,
+               codigoSeguridad = 248,
+               diferimientoInicial = 2,
+               numeroPagos = 18,
+               tipoPlanPagos = 03,
+               numeroControl = "CONN_VP_Test_004"
+            }
+         };
+         var body = JsonConvert.SerializeObject(ventaPromcion);
+         RunTestCase(body, nameof(Verificar_Venta_Dieciocho_Meses_Sin_Intereses));
+      }
 
+      [Fact]
+      public void Verificar_Venta_Doce_Meses_Sin_Intereses()
+      {
+         var ventaPromcion = new VentaPromocion()
+         {
+            datos = new VentaPromocion.Datos()
+            {
+               modoVenta = "PRD",
+               idTerminal = "000000001",
+               importeTotal = 1.0m,
+               modoEntrada = "MANUAL",
+               numeroPlastico = "4000000000000002",
+               periodoExpiracion = 1019,
+               codigoSeguridad = 248,
+               diferimientoInicial = 2,
+               numeroPagos = 12,
+               tipoPlanPagos = 03,
+               numeroControl = "CONN_VP_Test_003"
+            }
+         };
+         var body = JsonConvert.SerializeObject(ventaPromcion);
+         RunTestCase(body, nameof(Verificar_Venta_Doce_Meses_Sin_Intereses));
+      }
+
+      [Fact]
+      public void Verificar_Venta_Veinticuatro_Meses_Sin_Intereses()
+      {
+         var ventaPromcion = new VentaPromocion()
+         {
+            datos = new VentaPromocion.Datos()
+            {
+               modoVenta = "PRD",
+               idTerminal = "000000001",
+               importeTotal = 1.0m,
+               modoEntrada = "MANUAL",
+               numeroPlastico = "4000000000000002",
+               periodoExpiracion = 1019,
+               codigoSeguridad = 248,
+               diferimientoInicial = 2,
+               numeroPagos = 24,
+               tipoPlanPagos = 03,
+               numeroControl = "CONN_VP_Test_005"
+            }
+         };
+         var body = JsonConvert.SerializeObject(ventaPromcion);
+         RunTestCase(body, nameof(Verificar_Venta_Veinticuatro_Meses_Sin_Intereses));
+      }
+
+      [Fact]
+      public void Rechazo_de_Venta_por_Tarjeta_Expirada()
+      {
+         var ventaPromcion = new VentaPromocion()
+         {
+            datos = new VentaPromocion.Datos()
+            {
+               modoVenta = "PRD",
+               idTerminal = "000000001",
+               importeTotal = 1.0m,
+               modoEntrada = "MANUAL",
+               numeroPlastico = "4000000000000002",
+               periodoExpiracion = 1016,
+               codigoSeguridad = 248,
+               diferimientoInicial = 2,
+               numeroPagos = 6,
+               tipoPlanPagos = 03,
+               numeroControl = "CONN_VP_Test_006"
+            }
+         };
+         var body = JsonConvert.SerializeObject(ventaPromcion);
+         RunTestCase(body, nameof(Rechazo_de_Venta_por_Tarjeta_Expirada));
+      }
+
+      [Fact]
+      public void IdTerminal_excedido_en_longitud()
+      {
+         var ventaPromcion = new VentaPromocion()
+         {
+            datos = new VentaPromocion.Datos()
+            {
+               modoVenta = "PRD",
+               idTerminal = "AAAAAAAAAAAAAAAAAAAa000000001",
+               importeTotal = 1.0m,
+               modoEntrada = "MANUAL",
+               numeroPlastico = "4000000000000002",
+               periodoExpiracion = 1019,
+               codigoSeguridad = 248,
+               diferimientoInicial = 2,
+               numeroPagos = 6,
+               tipoPlanPagos = 03,
+               numeroControl = "CONN_VP_Test_007"
+            }
+         };
+         var body = JsonConvert.SerializeObject(ventaPromcion);
+         RunTestCase(body, nameof(IdTerminal_excedido_en_longitud));
       }
    }
 }

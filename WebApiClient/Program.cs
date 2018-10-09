@@ -53,7 +53,8 @@ namespace Banorte.Aquiriente.ClienteApi
                   result = "XMadQMG2FhGZ2Y1X";
                   break;
                case "cert":
-                  result = "gHx9E3iG729DHl8G";
+                  //result = "gHx9E3iG729DHl8G";
+                  result = "1gm04tJ3nYTmfMjf";
                   break;
                default:
                   result = "XMadQMG2FhGZ2Y1X";
@@ -76,7 +77,8 @@ namespace Banorte.Aquiriente.ClienteApi
                   result = "mPaYFP4F3KCmiZ7WeQQTel5Dq9l5ayhA";
                   break;
                case "cert":
-                  result = "YLNMenKA836d6kdQd9AjVa9qPbXqLlQM";
+                  //result = "YLNMenKA836d6kdQd9AjVa9qPbXqLlQM";
+                  result = "Qu4MDaGrTmUwCrP1DfqDGUG3llVPylEB";
                   break;
                default:
                   result = "mPaYFP4F3KCmiZ7WeQQTel5Dq9l5ayhA";
@@ -295,7 +297,7 @@ namespace Banorte.Aquiriente.ClienteApi
          return expiresIn;
       }
 
-      public static IRestResponse LlamadaApi(Uri endpoint, Token tokenAcceso, string payload)
+      public static IRestResponse LlamadaApi(Uri endpoint, Token tokenAcceso, string payload, string fileName = "Output.txt", string operation ="")
       {
          string issued = EpochBasedTime(0).ToString();
          string nonce = Nonce(12);
@@ -325,7 +327,7 @@ namespace Banorte.Aquiriente.ClienteApi
          IRestResponse response = client.Execute(request);
          stopwatch.Stop();
 
-         LogRequest(request, response, client, stopwatch.ElapsedMilliseconds);
+         LogRequest(request, response, client, stopwatch.ElapsedMilliseconds, fileName, operation);
 
          if (response.ResponseStatus == ResponseStatus.Error)
          {
@@ -341,7 +343,7 @@ namespace Banorte.Aquiriente.ClienteApi
          return response;
       }
 
-      private static void LogRequest(IRestRequest request, IRestResponse response, RestClient client, long durationMs)
+      private static void LogRequest(IRestRequest request, IRestResponse response, RestClient client, long durationMs, string fileName, string operation)
       {
          var requestToLog = new
          {
@@ -376,7 +378,8 @@ namespace Banorte.Aquiriente.ClienteApi
                  JsonConvert.SerializeObject(responseToLog)));
 
 
-         File.AppendAllLines("Output.txt", new string[]{
+         File.AppendAllLines(fileName, new string[]{
+            operation, 
             string.Format("Request completed in {0} ms\r\nRequest:\r\n{1}\r\nResponse:\r\n{2}",
             durationMs,
             JsonConvert.SerializeObject(requestToLog),

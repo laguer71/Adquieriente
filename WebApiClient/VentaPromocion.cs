@@ -15,7 +15,7 @@ namespace Banorte.Aquiriente.ClienteApi
          public string idTerminal = "";
          public decimal importeTotal = 0.0m;
          public string modoVenta = "";
-         ////public string numerocontrol = "";
+         public string numeroControl= "";
          //public string referenciaClienteUno = "";
          //public string referenciaClienteDos = "";
          //public string referenciaClienteTres = "";
