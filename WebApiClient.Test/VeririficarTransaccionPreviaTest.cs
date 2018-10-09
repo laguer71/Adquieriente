@@ -7,33 +7,42 @@ using Xunit;
 
 namespace WebApiClient.Test
 {
-   public class VeririficarTransaccionPreviaTest
+   public class VeririficarTransaccionPreviaTest : ApiTestBase
    {
 
+      public VeririficarTransaccionPreviaTest():base("/ecommerce/v1/transacciones/transaccion-previa","VerificarTransaccionPrevia.txt")
+      { }
+
       [Fact]
-      public void VerificarTransaccionPrevia()
+      public void Verificar_Venta_Normal_Existente()
       {
-         Token token;
-         token = Program.GetAuthToken();
+         var transaccionPrevia = new TransaccionPrevia()
+         {
+            datos = new TransaccionPrevia.Datos()
+            {
+               numeroReferencia = 322179651056
+            }
+         };
 
-         var endpoint = new Uri("https://api-dev.banorte.com/dev/ecommerce/v1/transacciones/transaccion-previa");
-         var body = JsonConvert.SerializeObject(TransaccionPrevia.CrearBody());
-         var result = Program.LlamadaApi(endpoint, token, body);
+         var body = JsonConvert.SerializeObject(transaccionPrevia);
 
-         Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+         RunTestCase(body, nameof(Verificar_Venta_Normal_Existente));
+      }
 
-         Assert.NotNull(result.Headers.FirstOrDefault(x => x.Name == "Access-Control-Allow-Headers").Value);
-         Assert.NotNull(result.Headers.FirstOrDefault(x => x.Name == "Access-Control-Allow-Methods").Value);
-         Assert.NotNull(result.Headers.FirstOrDefault(x => x.Name == "Access-Control-Allow-Origin").Value);
-         Assert.NotNull(result.Headers.FirstOrDefault(x => x.Name == "Access-Control-Max-Age").Value);
-         Assert.NotNull(result.Headers.FirstOrDefault(x => x.Name == "Connection").Value);
-         Assert.NotNull(result.Headers.FirstOrDefault(x => x.Name == "Content-Type").Value);
-         Assert.NotNull(result.Headers.FirstOrDefault(x => x.Name == "Date").Value);
-         Assert.NotNull(result.Headers.FirstOrDefault(x => x.Name == "Server").Value);
-         Assert.NotNull(result.Headers.FirstOrDefault(x => x.Name == "Transfer-Encoding").Value);
-         Assert.NotNull(result.Headers.FirstOrDefault(x => x.Name == "Vary").Value);
-         Assert.NotNull(result.Headers.FirstOrDefault(x => x.Name == "X-Backside-Transport").Value);
-         Assert.NotNull(result.Headers.FirstOrDefault(x => x.Name == "X-Global-Transaction-ID").Value);
+      [Fact]
+      public void Verificar_Referencia_No_Existe()
+      {
+         var transaccionPrevia = new TransaccionPrevia()
+         {
+            datos = new TransaccionPrevia.Datos()
+            {
+               numeroReferencia = 0
+            }
+         };
+
+         var body = JsonConvert.SerializeObject(transaccionPrevia);
+
+         RunTestCase(body, nameof(Verificar_Venta_Normal_Existente));
       }
    }
 }

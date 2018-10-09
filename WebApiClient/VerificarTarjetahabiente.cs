@@ -1,10 +1,11 @@
+using System;
 using System.Collections.Generic;
 
 namespace Banorte.Aquiriente.ClienteApi
 {
    public class Tarjetahabiente
    {
-      public readonly string tipoDeOperacion = "verificar-tarjeta-habiente"; 
+      public readonly string tipoDeOperacion = "verificar-tarjeta-habiente";
       public Datos datos = new Datos();
 
       public class Datos
@@ -45,6 +46,11 @@ namespace Banorte.Aquiriente.ClienteApi
          string nombrePersona = "";
       }
 
+      public class NumeroCalleFactura
+      {
+         public string numeroCalleFactura = "";
+      }
+
       public class DatosFactura
       {
          public string nombreFactura = "";
@@ -52,7 +58,7 @@ namespace Banorte.Aquiriente.ClienteApi
          public string calleFactura = "";
          //public string numeroComercio = "";
          //public string revisionCDA = "";
-         public IList<string> numerosCalleFactura = new List<string>() { "1" };
+         public IList<NumeroCalleFactura> numerosCalleFactura = new List<NumeroCalleFactura>() { new NumeroCalleFactura() { numeroCalleFactura = "" } };
          public string coloniaFactura = "";
          public string delegacionFactura = "";
          public string ciudadFactura = "";
@@ -80,10 +86,10 @@ namespace Banorte.Aquiriente.ClienteApi
                   nombreFactura = "string-1-60",
                   apellidoFactura = "string-1-60",
                   calleFactura = "string-1-40",
-  
-                  numerosCalleFactura = new List<string>()
+
+                  numerosCalleFactura = new List<NumeroCalleFactura>()
                   {
-                     "str-1-10"
+                     new NumeroCalleFactura () {numeroCalleFactura= "str-1-10" }
                   },
                   coloniaFactura = "string-1-30",
                   delegacionFactura = "string-1-30",
@@ -145,11 +151,11 @@ namespace Banorte.Aquiriente.ClienteApi
                //   //ipFactura = "string-0-15"
                //}
 
-              camposDefinidosAfiliacion = new CamposAfiliacion()
-              {
-                 numeroComercioCDA = "str-1-40",
-                 revisionCDA = "str-1-8"
-              }
+               camposDefinidosAfiliacion = new CamposAfiliacion()
+               {
+                  numeroComercioCDA = "str-1-40",
+                  revisionCDA = "str-1-8"
+               }
             }
          };
       }
